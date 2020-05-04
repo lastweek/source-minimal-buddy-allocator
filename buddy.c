@@ -12,16 +12,6 @@
 
 #include "buddy.h"
 
-#define PAGE_SHIFT		(12)
-#define PAGE_SIZE		(1UL << PAGE_SHIFT)
-#define PAGE_MASK		(~(PAGE_SIZE-1))
-
-#define PFN_ALIGN(x)	(((unsigned long)(x) + (PAGE_SIZE - 1)) & PAGE_MASK)
-#define PFN_UP(x)	(((x) + PAGE_SIZE-1) >> PAGE_SHIFT)
-#define PFN_DOWN(x)	((x) >> PAGE_SHIFT)
-#define PFN_PHYS(x)	((unsigned long)(x) << PAGE_SHIFT)
-#define PHYS_PFN(x)	((unsigned long)((x) >> PAGE_SHIFT))
-
 struct buddy_zone *buddy_zone;
 
 static inline struct page *pfn_to_page(unsigned long pfn)
@@ -342,7 +332,7 @@ void dump_buddy(void)
 
 void test_page_alloc(void)
 {
-#if 1
+#if 0
 	struct page *p1, *p2, *p3, *p4;
 
 	p1 = alloc_page(0);
@@ -389,7 +379,7 @@ void test_page_alloc(void)
  * We do not allow any holes at this point.
  */
 unsigned long buddy_mem_start = PAGE_SIZE;
-unsigned long buddy_mem_end = 1024 * 1024 * 1024;
+unsigned long buddy_mem_end = 16 * 1024UL * 1024UL * 1024UL;
 
 int main(void)
 {

@@ -11,7 +11,11 @@ as the case for the kernel one.
 I did some modificatons, e.g., remove a lot zone and accounting code, but kept its core.
 I decided to make it public, its linux's code anyway.
 
-Hopefully this is generic/small enough and can be *embedded* into other designs.
+
+## Why?
+
+1. This port is generic/small, can be *embedded* into other designs.
+2. Good start if you want to learn how Linux manages physical memory.
 
 ## Tuning
 
@@ -33,4 +37,26 @@ Page Size:
 The maximum orders `[0, MAX_ORDER)`:
 ```c
 #define MAX_ORDER		(3)
+```
+
+Debugging:
+```
+(e.g., 16GB memory, MAX_ORDER=11)
+Buddy Allocator
+	-------- ---------- --------------------
+	order    size (kb)  nr_free             
+	-------- ---------- --------------------
+	0        4          1                   
+	1        8          1                   
+	2        16         1                   
+	3        32         1                   
+	4        64         1                   
+	5        128        1                   
+	6        256        1                   
+	7        512        1                   
+	8        1024       1                   
+	9        2048       1                   
+	10       4096       4095                
+	-------- ---------- --------------------
+	Total Free: 16777212 kb, or around 16383 mb
 ```
